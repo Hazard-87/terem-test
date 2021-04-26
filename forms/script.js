@@ -10,7 +10,7 @@ const postData = async (url, data) => {
     body: data,
   });
 
-  return res.json();
+  return await res.text(); // надо переформатировать данные для возврата
 };
 
 const forms = document.querySelectorAll('form');
@@ -26,18 +26,17 @@ function bindPostData(form) {
     const formData = new FormData(form);
     const json = JSON.stringify(Object.fromEntries(formData.entries()));
 
-    postData('http://localhost:3000/forms', json)
-      .then((data) => {
-        const json = JSON.stringify(data);
-        field.textContent = `
+    field.textContent = `
         ${json}
         `;
+
+    postData('server.php', json)
+      .then((data) => {
+        form.reset();
+        console.log(data);
       })
       .catch(() => {
         alert('Возникла какая-то ошибка...');
-      })
-      .finally(() => {
-        form.reset();
       });
   });
 }
