@@ -25,8 +25,8 @@ function bindPostData(form) {
         'Content-Type': 'application/json',
       },
     })
-      .then((res) => res.text())
-      .then((data) => alert(data))
+      .then((res) => res.json())
+      .then((data) => console.log(data))
       .catch((e) => {
         console.log(e.message);
       });
